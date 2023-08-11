@@ -50,7 +50,7 @@ export default function UploadBox({ placeholder, error, disabled, sx, ...other }
         ...sx,
       }}
     >
-      <input {...getInputProps()} />
+      <input {...getInputProps()} multiple />
 
       {placeholder || <Iconify icon="eva:cloud-upload-fill" width={28} />}
     </Box>

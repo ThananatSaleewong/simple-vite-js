@@ -66,26 +66,89 @@ export default function OverviewFileView() {
     console.info('CREATE NEW FOLDER');
   }, [newFolder]);
 
+  // const handleDrop = useCallback (
+  //    (acceptedFiles) => {
+  //       const newFiles = acceptedFiles.map((file) =>
+  //         Object.assign(file, {
+  //           preview: URL.createObjectURL(file),
+  //         })
+  //       );
+
+  //          const imageRef =  ref(storage, `images/${acceptedFiles[0].name}`);
+  //           uploadBytes(imageRef, acceptedFiles[0]).then((snapshot) => {
+  //           getDownloadURL(snapshot.ref).then((url) => {
+  //             setImageList((prev) => [...prev, url]);
+  //           });
+  //         })
+
+    
+  //   },
+  //   [files]
+  // );
+
+
   const handleDrop = useCallback(
     (acceptedFiles) => {
-      const newFiles = acceptedFiles.map((file) =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file),
-        })
-      );
-      console.log(acceptedFiles[0]);
-      // setImageUpload(acceptedFiles[0]);
-      // if (imageUpload == null) return;
-      const imageRef = ref(storage, `images/${acceptedFiles[0].name}`);
-      uploadBytes(imageRef, acceptedFiles[0]).then((snapshot) => {
-        getDownloadURL(snapshot.ref).then((url) => {
-          setImageList((prev) => [...prev, url]);
+      acceptedFiles.forEach((file) => {
+        const imageRef = ref(storage, `images/${file.name}`);
+        uploadBytes(imageRef, file).then((snapshot) => {
+          getDownloadURL(snapshot.ref).then((url) => {
+            setImageList((prev) => [...prev, url]);
+            getMetadata(snapshot.ref).then((metadata) => {
+              setFiles((prev) => [
+                ...prev,
+                {
+                  id: `${metadata.generation}_file`,
+                  name: metadata.name,
+                  url: url,
+                  shared: [],
+                  tags: [],
+                  size: metadata.size,
+                  createdAt: metadata.timeCreated,
+                  modifiedAt: metadata.updated,
+                  type: metadata.contentType.split('/')[1],
+                  isFavorited: false, // Replace with your logic
+                },
+              ]);
+            });
+          });
         });
       });
-      // setFiles([...files, ...newFiles]);
     },
-    [files]
+    [] // No dependency required for this example
   );
+  useEffect(() => {
+    const imageListRef = ref(storage, 'images/');
+    listAll(imageListRef).then((response) => {
+      response.items.forEach((item) => {
+        getDownloadURL(item).then((url) => {
+          setImageList((prev) => [...prev, url]);
+          getMetadata(item).then((metadata) => {
+            setFiles((prev) => [
+              ...prev,
+              {
+                id: `${metadata.generation}_file`,
+                name: metadata.name,
+                url: url,
+                shared: [],
+                tags: [],
+                size: metadata.size,
+                createdAt: metadata.timeCreated,
+                modifiedAt: metadata.updated,
+                type: metadata.contentType.split('/')[1],
+                isFavorited: false, // Replace with your logic
+              },
+            ]);
+          });
+        });
+      });
+    });
+  }, []);
+
+
+
+
+
   // this is function upload with firebase
   const [imageUpload, setImageUpload] = useState(null);
   const [imageList, setImageList] = useState([]);
@@ -101,33 +164,33 @@ export default function OverviewFileView() {
   //   });
   // };
 
-  useEffect(() => {
-    listAll(imageListRef).then((response) => {
-      response.items.forEach((item) => {
-        getDownloadURL(item).then((url) => {
-          setImageList((prev) => [...prev, url]);
-          getMetadata(item).then((metadata) => {
-            console.log(metadata);
-            setFiles((prev) => [
-              ...prev,
-              {
-                id: `${metadata.generation}_file`,
-                name: metadata.name,
-                url: url,
-                shared: [],
-                tags: [],
-                size: metadata.size,
-                createdAt: metadata.timeCreated,
-                modifiedAt: metadata.updated,
-                type: metadata.name.split('.')[metadata.name.split('.').length - 1],
-                isFavorited: _mock.boolean(1),
-              },
-            ]);
-          });
-        });
-      });
-    });
-  }, []);
+  // useEffect(() => {
+  //   listAll(imageListRef).then((response) => {
+  //     response.items.forEach((item) => {
+  //       getDownloadURL(item).then((url) => {
+  //         setImageList((prev) => [...prev, url]);
+  //         getMetadata(item).then((metadata) => {
+  //           // console.log(metadata);
+  //           setFiles((prev) => [
+  //             ...prev,
+  //             {
+  //               id: `${metadata.generation}_file`,
+  //               name: metadata.name,
+  //               url: url,
+  //               shared: [],
+  //               tags: [],
+  //               size: metadata.size,
+  //               createdAt: metadata.timeCreated,
+  //               modifiedAt: metadata.updated,
+  //               type: metadata.name.split('.')[metadata.name.split('.').length - 1],
+  //               isFavorited: _mock.boolean(1),
+  //             },
+  //           ]);
+  //         });
+  //       });
+  //     });
+  //   });
+  // }, []);
 
   return (
     <>
@@ -152,7 +215,10 @@ export default function OverviewFileView() {
               borderRadius: 1.5,
             }}
           />
-          {/* <Button onClick={uploadImage}>upload</Button> */}
+           {/* {imageList.map((imageUrl, index) => (
+        <img key={index} src={imageUrl} alt={`Image ${index}`} />
+      ))} */}
+  
           {/* {imageList.map((url) => {
             return <Image src={url} />;
           })} */}
