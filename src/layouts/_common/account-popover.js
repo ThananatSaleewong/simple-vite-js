@@ -29,10 +29,10 @@ const OPTIONS = [
     label: 'Profile',
     linkTo: '/#1',
   },
-  {
-    label: 'Settings',
-    linkTo: '/#2',
-  },
+  // {
+  //   label: 'Settings',
+  //   linkTo: '/#2',
+  // },
 ];
 
 // ----------------------------------------------------------------------

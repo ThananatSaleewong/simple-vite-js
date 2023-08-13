@@ -102,7 +102,7 @@ export default function FirebaseRegisterView() {
 
   const renderHead = (
     <Stack spacing={2} sx={{ mb: 5, position: 'relative' }}>
-      <Typography variant="h4">Get started absolutely free</Typography>
+      <Typography variant="h4">Register</Typography>
 
       <Stack direction="row" spacing={0.5}>
         <Typography variant="body2"> Already have an account? </Typography>
@@ -187,10 +187,10 @@ export default function FirebaseRegisterView() {
           },
         }}
       >
-        OR
+       
       </Divider>
 
-      <Stack direction="row" justifyContent="center" spacing={2}>
+      {/* <Stack direction="row" justifyContent="center" spacing={2}>
         <IconButton onClick={handleGoogleLogin}>
           <Iconify icon="eva:google-fill" color="#DF3E30" />
         </IconButton>
@@ -202,7 +202,7 @@ export default function FirebaseRegisterView() {
         <IconButton onClick={handleTwitterLogin}>
           <Iconify icon="eva:twitter-fill" color="#1C9CEA" />
         </IconButton>
-      </Stack>
+      </Stack> */}
     </div>
   );
 
@@ -212,7 +212,7 @@ export default function FirebaseRegisterView() {
 
       {renderForm}
 
-      {renderTerms}
+      {/* {renderTerms} */}
 
       {renderLoginOption}
     </FormProvider>

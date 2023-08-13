@@ -54,7 +54,7 @@ export default function OverviewFileView() {
 
   const newFolder = useBoolean();
 
-  const upload = useBoolean();
+  const   upload = useBoolean();
 
   const handleChangeFolderName = useCallback((event) => {
     setFolderName(event.target.value);
@@ -144,9 +144,6 @@ export default function OverviewFileView() {
       });
     });
   }, []);
-
-
-
 
 
   // this is function upload with firebase
