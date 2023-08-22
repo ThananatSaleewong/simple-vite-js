@@ -159,9 +159,9 @@ export default function FileManagerFolderItem({
         },
       }}
     >
-      {folder.shared?.map((person) => (
+      {/* {folder.shared?.map((person) => (
         <Avatar key={person.id} alt={person.name} src={person.avatarUrl} />
-      ))}
+      ))} */}
     </AvatarGroup>
   );
 
@@ -214,25 +214,7 @@ export default function FileManagerFolderItem({
           Copy Link
         </MenuItem>
 
-        {/* <MenuItem
-          onClick={() => {
-            popover.onClose();
-            share.onTrue();
-          }}
-        >
-          <Iconify icon="solar:share-bold" />
-          Share
-        </MenuItem> */}
 
-        {/* <MenuItem
-          onClick={() => {
-            popover.onClose();
-            editFolder.onTrue();
-          }}
-        >
-          <Iconify icon="solar:pen-bold" />
-          Edit
-        </MenuItem> */}
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
@@ -261,7 +243,7 @@ export default function FileManagerFolderItem({
         }}
       />
 
-      <FileManagerShareDialog
+      {/* <FileManagerShareDialog
         open={share.value}
         shared={folder.shared}
         inviteEmail={inviteEmail}
@@ -271,7 +253,7 @@ export default function FileManagerFolderItem({
           share.onFalse();
           setInviteEmail('');
         }}
-      />
+      /> */}
 
       <FileManagerNewFolderDialog
         open={editFolder.value}

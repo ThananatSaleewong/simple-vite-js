@@ -22,6 +22,7 @@ import { useAuthContext } from 'src/auth/hooks';
 // componen
 import Iconify from 'src/components/iconify';
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
+import { useNavigate } from 'react-router';
 
 // ----------------------------------------------------------------------
 
@@ -59,46 +60,67 @@ export default function FirebaseRegisterView() {
     formState: { isSubmitting },
   } = methods;
 
+  // const onSubmit = handleSubmit(async (data) => {
+  //   try {
+  //     await register?.(data.email, data.password, data.firstName, data.lastName);
+  //     const searchParams = new URLSearchParams({
+  //       email: data.email,
+  //     }).toString();
+
+  //     const href = `${paths.auth.firebase.verify}?${searchParams}`;
+
+  //     router.push(href);
+  //   } catch (error) {
+  //     console.error(error);
+  //     reset();
+  //     setErrorMsg(typeof error === 'string' ? error : error.message);
+  //   }
+  //   console.log(data)
+  // });
+  const navigate = useNavigate();
   const onSubmit = handleSubmit(async (data) => {
     try {
       await register?.(data.email, data.password, data.firstName, data.lastName);
       const searchParams = new URLSearchParams({
         email: data.email,
       }).toString();
-
+  
       const href = `${paths.auth.firebase.verify}?${searchParams}`;
-
       router.push(href);
+  
+      // Redirect to the login page after successful registration
+      navigate(paths.auth.firebase.verify);
     } catch (error) {
       console.error(error);
       reset();
       setErrorMsg(typeof error === 'string' ? error : error.message);
     }
+    console.log(data);
   });
+  
+  // const handleGoogleLogin = async () => {
+  //   try {
+  //     await loginWithGoogle?.();
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
-  const handleGoogleLogin = async () => {
-    try {
-      await loginWithGoogle?.();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const handleGithubLogin = async () => {
+  //   try {
+  //     await loginWithGithub?.();
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
-  const handleGithubLogin = async () => {
-    try {
-      await loginWithGithub?.();
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  const handleTwitterLogin = async () => {
-    try {
-      await loginWithTwitter?.();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const handleTwitterLogin = async () => {
+  //   try {
+  //     await loginWithTwitter?.();
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const renderHead = (
     <Stack spacing={2} sx={{ mb: 5, position: 'relative' }}>
@@ -114,27 +136,27 @@ export default function FirebaseRegisterView() {
     </Stack>
   );
 
-  const renderTerms = (
-    <Typography
-      component="div"
-      sx={{
-        color: 'text.secondary',
-        mt: 2.5,
-        typography: 'caption',
-        textAlign: 'center',
-      }}
-    >
-      {'By signing up, I agree to '}
-      <Link underline="always" color="text.primary">
-        Terms of Service
-      </Link>
-      {' and '}
-      <Link underline="always" color="text.primary">
-        Privacy Policy
-      </Link>
-      .
-    </Typography>
-  );
+  // const renderTerms = (
+  //   <Typography
+  //     component="div"
+  //     sx={{
+  //       color: 'text.secondary',
+  //       mt: 2.5,
+  //       typography: 'caption',
+  //       textAlign: 'center',
+  //     }}
+  //   >
+  //     {'By signing up, I agree to '}
+  //     <Link underline="always" color="text.primary">
+  //       Terms of Service
+  //     </Link>
+  //     {' and '}
+  //     <Link underline="always" color="text.primary">
+  //       Privacy Policy
+  //     </Link>
+  //     .
+  //   </Typography>
+  // );
 
   const renderForm = (
     <Stack spacing={2.5}>

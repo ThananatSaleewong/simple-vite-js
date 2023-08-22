@@ -7,12 +7,14 @@ import AuthClassicLayout from 'src/layouts/auth/classic';
 // components
 import { SplashScreen } from 'src/components/loading-screen';
 
+
 // ----------------------------------------------------------------------
 
 // JWT
 const FirebaseLoginPage = lazy(() => import('src/pages/auth/firebase/login'));
 const FirebaseRegisterPage = lazy(() => import('src/pages/auth/firebase/register'));
-
+const FirebaseForgotPasswordPage = lazy(() => import('src/pages/auth/firebase/forgot-password'))
+const FirebaseVerifyPage = lazy(() => import('src/pages/auth/firebase/verify'))
 // ----------------------------------------------------------------------
 
 const authFirebase = {
@@ -38,6 +40,22 @@ const authFirebase = {
       element: (
         <AuthClassicLayout title="Manage the job more effectively with Minimal">
           <FirebaseRegisterPage />
+        </AuthClassicLayout>
+      ),
+    },
+    {
+      path: 'forgotpassword',
+      element: (
+        <AuthClassicLayout title="Manage the job more effectively with Minimal">
+          <FirebaseForgotPasswordPage  />
+        </AuthClassicLayout>
+      ),
+    },
+    {
+      path: 'verify',
+      element: (
+        <AuthClassicLayout title="Manage the job more effectively with Minimal">
+          <FirebaseVerifyPage  />
         </AuthClassicLayout>
       ),
     },

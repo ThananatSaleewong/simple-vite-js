@@ -19,6 +19,7 @@ import { SettingsProvider, SettingsDrawer } from 'src/components/settings';
 // auth
 import { AuthProvider, AuthConsumer } from 'src/auth/context/firebase';
 
+
 // ----------------------------------------------------------------------
 
 export default function App() {
@@ -55,6 +56,7 @@ export default function App() {
               <ProgressBar />
               <AuthConsumer>
                 <Router />
+
               </AuthConsumer>
             </MotionLazy>
           </ThemeProvider>

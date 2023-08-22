@@ -73,29 +73,29 @@ export default function FirebaseLoginView() {
     }
   });
 
-  const handleGoogleLogin = async () => {
-    try {
-      await loginWithGoogle?.();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const handleGoogleLogin = async () => {
+  //   try {
+  //     await loginWithGoogle?.();
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
-  const handleGithubLogin = async () => {
-    try {
-      await loginWithGithub?.();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const handleGithubLogin = async () => {
+  //   try {
+  //     await loginWithGithub?.();
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
-  const handleTwitterLogin = async () => {
-    try {
-      await loginWithTwitter?.();
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const handleTwitterLogin = async () => {
+  //   try {
+  //     await loginWithTwitter?.();
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const renderHead = (
     <Stack spacing={2} sx={{ mb: 5 }}>

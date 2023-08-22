@@ -41,7 +41,6 @@ export default function FileManagerNewFolderDialog({
           preview: URL.createObjectURL(file),
         })
       );
-
       setFiles([...files, ...newFiles]);
     },
     [files]
@@ -60,13 +59,24 @@ export default function FileManagerNewFolderDialog({
   const handleRemoveAllFiles = () => {
     setFiles([]);
   };
+  
+
 
   return (
     <Dialog fullWidth maxWidth="sm" open={open} onClose={onClose} {...other}>
       <DialogTitle sx={{ p: (theme) => theme.spacing(3, 3, 2, 3) }}> {title} </DialogTitle>
 
       <DialogContent dividers sx={{ pt: 1, pb: 0, border: 'none' }}>
-        {(onCreate || onUpdate) && (
+        {/* {(onCreate || onUpdate) && (
+          <TextField
+            fullWidth
+            label="Folder name"
+            value={folderName}
+            onChange={onChangeFolderName}
+            sx={{ mb: 3 }}
+          />
+        )} */}
+        {onCreate && (
           <TextField
             fullWidth
             label="Folder name"
@@ -76,17 +86,18 @@ export default function FileManagerNewFolderDialog({
           />
         )}
 
-        <Upload multiple files={files} onDrop={handleDrop} onRemove={handleRemoveFile} />
+        {/* 
+        <Upload multiple files={files} onDrop={handleDrop} onRemove={handleRemoveFile} /> */}
       </DialogContent>
 
       <DialogActions>
-        <Button
+        {/* <Button
           variant="contained"
           startIcon={<Iconify icon="eva:cloud-upload-fill" />}
           onClick={handleUpload}
         >
           Upload
-        </Button>
+        </Button> */}
 
         {!!files.length && (
           <Button variant="outlined" color="inherit" onClick={handleRemoveAllFiles}>
@@ -101,17 +112,34 @@ export default function FileManagerNewFolderDialog({
             </Button>
           </Stack>
         )}
+
+        {/* {onCreate && (
+          <Stack direction="row" justifyContent="flex-end" flexGrow={1}>
+            <Button variant="soft" onClick={handleCreateFolder}>
+              Create
+            </Button>
+          </Stack>
+        )} */}
       </DialogActions>
     </Dialog>
   );
 }
 
+// FileManagerNewFolderDialog.propTypes = {
+//   folderName: PropTypes.string,
+//   onChangeFolderName: PropTypes.func,
+//   onClose: PropTypes.func,
+//   onCreate: PropTypes.func,
+//   onUpdate: PropTypes.func,
+//   open: PropTypes.bool,
+//   title: PropTypes.string,
+// };
+
 FileManagerNewFolderDialog.propTypes = {
   folderName: PropTypes.string,
   onChangeFolderName: PropTypes.func,
   onClose: PropTypes.func,
-  onCreate: PropTypes.func,
-  onUpdate: PropTypes.func,
+  onCreate: PropTypes.func, // Callback for folder creation
   open: PropTypes.bool,
   title: PropTypes.string,
 };

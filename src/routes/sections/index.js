@@ -1,4 +1,4 @@
-import { Navigate, useRoutes } from 'react-router-dom';
+import { Navigate, useRoutes  } from 'react-router-dom';
 // config
 import { PATH_AFTER_LOGIN } from 'src/config-global';
 //
@@ -7,6 +7,7 @@ import { mainRoutes } from './main';
 import { authRoutes } from './auth';
 import { dashboardRoutes } from './dashboard';
 import { paths } from '../paths';
+import SubfolderView from 'src/sections/two/file/view/SubfolderView';
 
 // ----------------------------------------------------------------------
 
@@ -28,5 +29,9 @@ export default function Router() {
 
     // No match 404
     { path: '*', element: <Navigate to="/404" replace /> },
+    {
+      path: '/subfolder/:folderId',
+      element: <SubfolderView />, // Render the SubfolderView component
+    },
   ]);
 }
