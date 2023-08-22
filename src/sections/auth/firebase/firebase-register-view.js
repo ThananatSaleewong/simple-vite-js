@@ -31,7 +31,7 @@ export default function FirebaseRegisterView() {
 
   const [errorMsg, setErrorMsg] = useState('');
 
-  const router = useRouter();
+  const router = useRouter()
 
   const password = useBoolean();
 
@@ -60,43 +60,39 @@ export default function FirebaseRegisterView() {
     formState: { isSubmitting },
   } = methods;
 
-  // const onSubmit = handleSubmit(async (data) => {
-  //   try {
-  //     await register?.(data.email, data.password, data.firstName, data.lastName);
-  //     const searchParams = new URLSearchParams({
-  //       email: data.email,
-  //     }).toString();
-
-  //     const href = `${paths.auth.firebase.verify}?${searchParams}`;
-
-  //     router.push(href);
-  //   } catch (error) {
-  //     console.error(error);
-  //     reset();
-  //     setErrorMsg(typeof error === 'string' ? error : error.message);
-  //   }
-  //   console.log(data)
-  // });
-  const navigate = useNavigate();
   const onSubmit = handleSubmit(async (data) => {
     try {
       await register?.(data.email, data.password, data.firstName, data.lastName);
       const searchParams = new URLSearchParams({
         email: data.email,
       }).toString();
-  
+
       const href = `${paths.auth.firebase.verify}?${searchParams}`;
+
       router.push(href);
-  
-      // Redirect to the login page after successful registration
-      navigate(paths.auth.firebase.verify);
     } catch (error) {
       console.error(error);
       reset();
       setErrorMsg(typeof error === 'string' ? error : error.message);
     }
-    console.log(data);
+    console.log(data)
   });
+  // const navigate = useNavigate();
+  // const onSubmit = handleSubmit(async (data) => {
+  //   try {
+  //     await register?.(data.email, data.password, data.firstName, data.lastName);
+    
+  
+  
+  //     // Redirect to the login page after successful registration
+  //     navigate(paths.auth.firebase.verify);
+  //   } catch (error) {
+  //     console.error(error);
+  //     reset();
+  //     setErrorMsg(typeof error === 'string' ? error : error.message);
+  //   }
+  //   console.log(data);
+  // });
   
   // const handleGoogleLogin = async () => {
   //   try {

@@ -24,6 +24,7 @@ import { useAuthContext } from 'src/auth/hooks';
 // components
 import Iconify from 'src/components/iconify';
 import FormProvider, { RHFTextField } from 'src/components/hook-form';
+import { useNavigate } from 'react-router';
 
 // ----------------------------------------------------------------------
 
@@ -60,12 +61,12 @@ export default function FirebaseLoginView() {
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
-
+  const navigate = useNavigate();
   const onSubmit = handleSubmit(async (data) => {
     try {
       await login?.(data.email, data.password);
-
-      router.push(returnTo || PATH_AFTER_LOGIN);
+      navigate(PATH_AFTER_LOGIN, { replace: true });
+      window.location.reload();
     } catch (error) {
       console.error(error);
       reset();
@@ -167,10 +168,8 @@ export default function FirebaseLoginView() {
             borderTopStyle: 'dashed',
           },
         }}
-      >
-        
-      </Divider>
-{/* 
+      ></Divider>
+      {/* 
       <Stack direction="row" justifyContent="center" spacing={2}>
         <IconButton onClick={handleGoogleLogin}>
           <Iconify icon="eva:google-fill" color="#DF3E30" />

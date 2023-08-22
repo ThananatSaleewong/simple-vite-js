@@ -5,6 +5,7 @@ import { paths } from 'src/routes/paths';
 import { useRouter, useSearchParams } from 'src/routes/hooks';
 //
 import { useAuthContext } from '../hooks';
+import { useNavigate } from 'react-router';
 
 // ----------------------------------------------------------------------
 
@@ -14,12 +15,12 @@ export default function GuestGuard({ children }) {
   const searchParams = useSearchParams();
 
   const returnTo = searchParams.get('returnTo') || paths.dashboard.root;
-
+  const navigate = useNavigate();
   const { authenticated } = useAuthContext();
 
   const check = useCallback(() => {
     if (authenticated) {
-      router.replace(returnTo);
+      navigate(paths.dashboard.root);
     }
   }, [authenticated, returnTo, router]);
 

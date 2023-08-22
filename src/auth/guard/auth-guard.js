@@ -5,6 +5,7 @@ import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 //
 import { useAuthContext } from '../hooks';
+import { useNavigate } from 'react-router';
 
 // ----------------------------------------------------------------------
 
@@ -18,9 +19,9 @@ export default function AuthGuard({ children }) {
   const router = useRouter();
 
   const { authenticated, method } = useAuthContext();
-
+  const navigate = useNavigate()
   const [checked, setChecked] = useState(false);
-
+  console.log(authenticated)
   const check = useCallback(() => {
     if (!authenticated) {
       const searchParams = new URLSearchParams({
@@ -31,7 +32,7 @@ export default function AuthGuard({ children }) {
 
       const href = `${loginPath}?${searchParams}`;
 
-      router.replace(href);
+      navigate(href);
     } else {
       setChecked(true);
     }
