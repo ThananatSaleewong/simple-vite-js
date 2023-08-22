@@ -141,14 +141,11 @@ export default function OverviewFileView() {
 
         // Create a new folder document in the Firestore collection
         // await addDoc(collection(firestore, 'folders'), data);
-         // Create a new folder document in the Firestore collection
-      const newFolderDocRef = await addDoc(collection(firestore, 'folders'), data);
+        // Create a new folder document in the Firestore collection
+        const newFolderDocRef = await addDoc(collection(firestore, 'folders'), data);
 
-      // Get the generated folder ID
-      const newFolderId = newFolderDocRef.id;
-
-
-
+        // Get the generated folder ID
+        const newFolderId = newFolderDocRef.id;
         // Update the state with the new folder data
         setFolders((prevFolders) => [
           ...prevFolders,
