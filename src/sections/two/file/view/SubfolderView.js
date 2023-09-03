@@ -30,7 +30,7 @@ const SubfolderView = () => {
 
   const handleFileUpload = () => {
     if (!selectedFile) return;
-
+  
     const storageRef = ref(storage, `subfolders/${folderId}/${selectedFile.name}`);
     uploadBytes(storageRef, selectedFile)
       .then(() => {
@@ -44,7 +44,7 @@ const SubfolderView = () => {
   };
 
   const handleCreateSubfolder = () => {
-    const firestore = getFirestore(app);
+
     const subfolderData = {
       name: subfolderName,
       parent: folderId,

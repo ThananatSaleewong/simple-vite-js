@@ -277,6 +277,47 @@ export default function OverviewFileView() {
   const [folders, setFolders] = useState([]); // State to hold folder data
   const [folderList, setFolderList] = useState([]);
 
+
+  const handleDeleteFolder = (folder) => {
+    // Your code to delete the folder goes here
+  };
+  const navigate = useNavigate();
+  const handleFolderClick = (folderId) => {
+    // Navigate to the subfolder view with the folderId as a parameter
+    navigate(`/subfolder/${folderId}`);
+  };
+  const [deleteButtonAnchor, setDeleteButtonAnchor] = useState(null);
+
+  const handleDeleteButtonClick = (event, folder) => {
+    setDeleteButtonAnchor(event.currentTarget);
+    setCurrentFolder(folder); // Set the current folder to be deleted
+  };
+
+  const handleDeleteConfirm = async () => {
+    try {
+      if (currentFolder) {
+        const folderRef = doc(collection(firestore, 'folders'), currentFolder.id);
+        await deleteDoc(folderRef);
+
+        // Update the folders state to remove the deleted folder
+        setFolders((prevFolders) => prevFolders.filter((folder) => folder.id !== currentFolder.id));
+
+        // Show success toast
+        toast.success('Folder deleted successfully!');
+      }
+    } catch (error) {
+      // Show error toast
+      toast.error('An error occurred while deleting the folder.');
+      console.error('Error deleting folder:', error);
+    }
+
+    setDeleteButtonAnchor(null); // Close the popover
+    setCurrentFolder(null); // Clear the current folder
+  };
+
+  const handlePopoverClose = () => {
+    setDeleteButtonAnchor(null);
+  };
   useEffect(() => {
     const fetchFolders = async () => {
       const folderCollection = collection(firestore, 'folders');
@@ -307,44 +348,6 @@ export default function OverviewFileView() {
     };
     fetchFolders();
   }, [firestore]);
-  const handleDeleteFolder = (folder) => {
-    // Your code to delete the folder goes here
-  };
-  const navigate = useNavigate();
-  const handleFolderClick = (folderId) => {
-    // Navigate to the subfolder view with the folderId as a parameter
-    navigate(`/subfolder/${folderId}`);
-  };
-  const [deleteButtonAnchor, setDeleteButtonAnchor] = useState(null);
-
-  const handleDeleteButtonClick = (event, folder) => {
-    setDeleteButtonAnchor(event.currentTarget);
-    setCurrentFolder(folder); // Set the current folder to be deleted
-  };
-
-  const handleDeleteConfirm = async () => {
-    try {
-      if (currentFolder) {
-        const folderRef = doc(collection(firestore, 'folders'), currentFolder.id);
-        await deleteDoc(folderRef);
-
-        // Show success toast
-        toast.success('Folder deleted successfully!');
-      }
-    } catch (error) {
-      // Show error toast
-      toast.error('An error occurred while deleting the folder.');
-      console.error('Error deleting folder:', error);
-    }
-
-    setDeleteButtonAnchor(null); // Close the popover
-    setCurrentFolder(null); // Clear the current folder
-  };
-
-  const handlePopoverClose = () => {
-    setDeleteButtonAnchor(null);
-  };
-
   return (
     <>
       <ToastContainer />
